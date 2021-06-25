@@ -17,14 +17,18 @@
 //
 // ----------------------------------------------------------------
 
+// Usage: enter the initial value, the exponent factor, the maximum time
+
 use std::io;
 
 fn main() {
     println!("Demonstration of exponent growth.");
 
-    println!("Enter the initial number:");
+    println!("Enter the initial value:");
 
-    let mut initial:f64 = 0.0;
+    let initial: f64;
+    let multipl: f64;
+    let mut max_recurs: u16;
     let mut riga = String::new();
 
     io::stdin()
@@ -33,6 +37,36 @@ fn main() {
 
     initial = riga.trim().parse().expect("Please type a valid number");
 
-    println!("Value: {}", initial);
+    println!("Enter the exponential factor:");
+    riga.clear();
+    io::stdin()
+        .read_line(&mut riga)
+        .expect("Error reading");
+    multipl = riga.trim().parse().expect("Please type a valid number");
+
+    println!("Enter the iteration limit:");
+    riga.clear();
+    io::stdin()
+        .read_line(&mut riga)
+        .expect("Error reading");
+    max_recurs = riga.trim().parse().expect("Please type a valid number");
+    if max_recurs <= 0 {
+        max_recurs = 15;
+    }
+
+    println!("test: initial {}, multipl {}, final = {}", initial, multipl, expon(initial, multipl, max_recurs));
+
+}
+
+
+fn expon(number: f64, multipl: f64, limit: u16) -> f64 {
+    if limit > 0 {
+        let calc: f64 = number * multipl;
+        expon(calc, multipl, limit-1)
+    }
+    else
+    {
+        return number * multipl;
+    }
 
 }
